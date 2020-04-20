@@ -57,7 +57,7 @@ problem3 (x:xs) y
 -- λ> problem4 "Hello, world!"
 -- 13
 problem4 :: [a] -> Int
-problem4 = undefined
+problem4 a = length a
 
 
 -- Problem 5
