@@ -17,7 +17,7 @@ module Lecture01 where
 -- λ> problem1 ['x','y','z']
 -- 'z'
 problem1 :: [a] -> a
-problem1 = undefined
+problem1 = last 
 
 
 -- Problem 2
