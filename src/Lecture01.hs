@@ -41,7 +41,12 @@ problem2 (x:xs) = problem2 xs
 -- λ> problem3 "haskell" 5
 -- 'e'
 problem3 :: [a] -> Int -> a
-problem3 = undefined
+problem3 x y
+	| length x < y = error "Cant work"
+problem3 (x:xs) y
+	| y == 1 = x
+	| otherwise = problem3 xs (y-1)
+
 
 
 -- Problem 4
