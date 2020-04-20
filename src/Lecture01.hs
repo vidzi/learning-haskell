@@ -27,7 +27,10 @@ problem1 = last
 -- λ> problem2 ['a'..'z']
 -- 'y'
 problem2 :: [a] -> a
-problem2 = undefined
+problem2 [] = error "Cant work"
+problem2 [x] = error "Cant work"
+problem2 [x,y] = x
+problem2 (x:xs) = problem2 xs
 
 
 -- Problem 3
