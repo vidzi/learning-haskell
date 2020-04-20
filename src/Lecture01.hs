@@ -84,6 +84,14 @@ problem5 (x:xs) = problem5 xs ++ [x]
 -- True
 problem6 :: Eq a => [a] -> Bool
 problem6 = undefined
+-- problem6 [] = True
+-- problem6 [x] = True
+-- problem6 [x, y] 
+-- 	| x == y = True
+-- 	| otherwise = False
+-- problem6 (x:xs:y) 
+-- 	| x == y = problem6 xs
+-- 	| otherwise = False
 
 
 -- Problem 7
@@ -115,7 +123,11 @@ problem7 = undefined
 -- λ> problem8 "aaaabccaadeeee"
 -- "abcade"
 problem8 :: Eq a => [a] -> [a]
-problem8 = undefined
+problem8 [] = []
+problem8 [x] = [x]
+problem8 (x:xs) 
+	| x == head xs = problem8 xs
+	| otherwise = [x] ++ problem8 xs
 
 
 -- Problem 9
