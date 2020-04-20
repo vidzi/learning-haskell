@@ -68,7 +68,8 @@ problem4 a = length a
 -- λ> problem5 [1,2,3,4]
 -- [4,3,2,1]
 problem5 :: [a] -> [a]
-problem5 = undefined
+problem5 [] = []
+problem5 (x:xs) = problem5 xs ++ [x]
 
 
 -- Problem 6
