@@ -221,7 +221,8 @@ problem14 (x:xs) = [x, x] ++ problem14 xs
 -- λ> problem15 "abc" 3
 -- "aaabbbccc"
 problem15 :: [a] -> Int -> [a]
-problem15 = undefined
+problem15 [x] n = replicate n x
+problem15 (x:xs) n = problem15 [x] n ++ problem15 xs n
 
 
 -- Problem 16
