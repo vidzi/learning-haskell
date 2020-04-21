@@ -83,13 +83,7 @@ problem5 (x:xs) = problem5 xs ++ [x]
 -- λ> problem6 [1,2,4,8,16,8,4,2,1]
 -- True
 problem6 :: Eq a => [a] -> Bool
-problem6 = undefined
--- problem6 [] = True
--- problem6 [x] = True
--- problem6 [x, y]
--- problem6 (x:xs) 
--- 	| x == last xs = 
-
+problem6 (x:xs) = reverse xs ++ [x] == [x] ++ xs 
 
 -- Problem 7
 -- (**) Flatten a nested list structure.
