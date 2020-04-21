@@ -110,9 +110,6 @@ data NestedList a
 
 problem7 :: NestedList a -> [a]
 problem7 = undefined
--- problem7 [] = []
--- problem7 [Elem x] = [x]
--- problem7 (x:xs) = problem7 x ++ problem7 xs
 
 
 -- Problem 8
@@ -138,13 +135,9 @@ problem8 (x:xs)
 -- ["aaaa","b","cc","aa","d","eeee"]
 problem9 :: Eq a => [a] -> [[a]]
 problem9 = undefined
--- problem9 [x] = [x]
--- problem9 [x, y]
--- 	| x == y = [[x] ++ [y]]
--- 	| otherwise = [x, y]
--- problem9 (x:xs) 
--- 	| x == head xs = [x] ++ head problem9 xs 
--- 	| otherwise = [x] 
+-- problem9 (x:xs)
+-- 	| x == head xs = [x] ++ head problem9 xs
+-- 	| otherwise = [x] ++ problem9 xs
 
 
 -- Problem 10
@@ -217,7 +210,8 @@ problem13 = undefined
 -- λ> problem14 [1, 2, 3]
 -- [1,1,2,2,3,3]
 problem14 :: [a] -> [a]
-problem14 = undefined
+problem14 [x] = [x,x]
+problem14 (x:xs) = [x, x] ++ problem14 xs
 
 
 -- Problem 15
