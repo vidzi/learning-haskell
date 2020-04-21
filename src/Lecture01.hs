@@ -17,7 +17,9 @@ module Lecture01 where
 -- λ> problem1 ['x','y','z']
 -- 'z'
 problem1 :: [a] -> a
-problem1 = last 
+problem1 [] = error "Cant work"
+problem1 [x] = x
+problem1 (x:xs) = problem1 xs
 
 
 -- Problem 2
@@ -138,6 +140,13 @@ problem8 (x:xs)
 -- ["aaaa","b","cc","aa","d","eeee"]
 problem9 :: Eq a => [a] -> [[a]]
 problem9 = undefined
+-- problem9 [x] = [x]
+-- problem9 [x, y]
+-- 	| x == y = [[x] ++ [y]]
+-- 	| otherwise = [x, y]
+-- problem9 (x:xs) 
+-- 	| x == head xs = [x] ++ head problem9 xs 
+-- 	| otherwise = [x] 
 
 
 -- Problem 10
