@@ -129,8 +129,9 @@ problem8 (x:xs)
 -- ["aaaa","b","cc","aa","d","eeee"]
 problem9 :: Eq a => [a] -> [[a]]
 problem9 = undefined
+-- problem9 [x] = [[x]]
 -- problem9 (x:xs)
--- 	| x == head xs = [x] ++ head problem9 xs
+-- 	| x == head xs = [[x] ++ head problem9 xs]
 -- 	| otherwise = [x] ++ problem9 xs
 
 
@@ -226,8 +227,11 @@ problem15 (x:xs) n = problem15 [x] n ++ problem15 xs n
 -- λ> problem16 "abcdefghik" 3
 -- "abdeghk"
 problem16 :: [a] -> Int -> [a]
-problem16 = undefined
-
+problem16 [] n = [] 
+problem16 (x:xs) n
+	| n == 1 = problem16 xs n
+	| otherwise = [x] ++ problem16 xs (n-1)
+	where current_counter = n
 
 -- Problem 17
 -- (*) Split a list into two parts; the length of the first part is given.
@@ -250,7 +254,10 @@ problem17 = undefined
 -- λ> problem18 ['a','b','c','d','e','f','g','h','i','k'] 3 7
 -- "cdefg"
 problem18 :: [a] -> Int -> Int -> [a]
-problem18 = undefined
+problem18 [] i k = []
+problem18 (x:xs) i k
+	| i <= 1 && k >= 1 = [x] ++ problem18 xs (i-1) (k-1)
+	| otherwise = problem18 xs (i-1) (k-1)
 
 
 -- Problem 19
