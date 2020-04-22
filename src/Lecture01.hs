@@ -312,7 +312,10 @@ problem19 = undefined
 -- λ> problem20 2 "abcd"
 -- ('b',"acd")
 problem20 :: Int -> [a] -> (a, [a])
-problem20 = undefined
+problem20 n [x]  =  (x, [x])
+problem20 n (x:xs) 
+	| n > 1 || n < 1 =  (fst (problem20 (n-1) xs), [x] ++ snd (problem20 (n-1) xs) )
+	| n == 1 = (x , snd (problem20 (n-1) xs))
 
 
 -- Problem A
