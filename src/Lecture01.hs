@@ -145,33 +145,6 @@ problem18 (x:xs) i k
 	| otherwise = problem18 xs (i-1) (k-1)
 
 
-----------------------------------------------------------------------------------------------------
----------------------------------------------------------------------------------------------------
-
-
-
--- TODO ------------------------------- (No clue)
--- Problem 7
--- (**) Flatten a nested list structure.
---      Transform a list, possibly holding lists as elements into a `flat' list by
---      replacing each list with its elements (recursively).
--- Example:
--- Example in Haskell:
--- We have to define a new data type, because lists in Haskell are homogeneous.
-data NestedList a
-  = Elem a
-  | List [NestedList a]
--- λ> problem7 (Elem 5)
--- [5]
--- λ> problem7 (List [Elem 1, List [Elem 2, List [Elem 3, Elem 4], Elem 5]])
--- [1,2,3,4,5]
--- λ> problem7 (List [])
--- []
-
-problem7 :: NestedList a -> [a]
-problem7 = undefined
-
-
 -- TODO ------------------------------- (based on question asked)
 -- Problem 9
 -- (**) Pack consecutive duplicates of list elements into sublists. If a list contains
@@ -200,6 +173,33 @@ problem10 [x] = [(1, x)]
 problem10 (x:xs)
 	| x == head xs = [(fst (head (problem10 xs)) + 1, x)] ++ tail (problem10 xs)
 	| otherwise = [(1, x)] ++ problem10 xs 
+
+
+----------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+
+
+
+-- TODO ------------------------------- (No clue)
+-- Problem 7
+-- (**) Flatten a nested list structure.
+--      Transform a list, possibly holding lists as elements into a `flat' list by
+--      replacing each list with its elements (recursively).
+-- Example:
+-- Example in Haskell:
+-- We have to define a new data type, because lists in Haskell are homogeneous.
+data NestedList a
+  = Elem a
+  | List [NestedList a]
+-- λ> problem7 (Elem 5)
+-- [5]
+-- λ> problem7 (List [Elem 1, List [Elem 2, List [Elem 3, Elem 4], Elem 5]])
+-- [1,2,3,4,5]
+-- λ> problem7 (List [])
+-- []
+
+problem7 :: NestedList a -> [a]
+problem7 = undefined
 
 
 
@@ -275,7 +275,6 @@ problem16 (x:xs) n
 
 
 
--- TODO ------------------------------- (based on question asked)
 -- Problem 17
 -- (*) Split a list into two parts; the length of the first part is given.
 --     Do not use any predefined predicates.
@@ -284,8 +283,10 @@ problem16 (x:xs) n
 -- λ> problem17 "abcdefghik" 3
 -- ("abc", "defghik")
 problem17 :: [a] -> Int -> ([a], [a])
-problem17 = undefined
-
+problem17 [] n = ([], [])
+problem17 (x:xs) n
+	| n == 1 = ([x], xs)
+	| n > 1 = ([x] ++ (fst (problem17 xs (n-1))), snd (problem17 xs (n-1)))
 
 
 
