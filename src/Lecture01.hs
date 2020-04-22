@@ -196,14 +196,13 @@ problem9 (x:xs)
 -- λ> problem10 "aaaabccaadeeee"
 -- [(4,'a'),(1,'b'),(2,'c'),(2,'a'),(1,'d'),(4,'e')]
 problem10 :: Eq a => [a] -> [(Int, a)]
-problem10 = undefined
--- problem10 [x] = [(1, x)]
--- problem10 (x:xs) 
---	| x == head xs = head problem10 xs
---	| otherwise = 
--- problem10 [x] = [(1, x)]
--- problem10 (x:xs)
--- 	| x == head xs = head problem10 xs
+problem10 [x] = [(1, x)]
+problem10 (x:xs)
+	| x == head xs = [(fst (head (problem10 xs)) + 1, x)] ++ tail (problem10 xs)
+	| otherwise = [(1, x)] ++ problem10 xs 
+
+
+
 
 
 -- TODO ------------------------------- (based on question asked)
