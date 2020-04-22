@@ -85,27 +85,9 @@ problem5 (x:xs) = problem5 xs ++ [x]
 problem6 :: Eq a => [a] -> Bool
 problem6 (x:xs) = reverse xs ++ [x] == [x] ++ xs 
 
--- Problem 7
--- (**) Flatten a nested list structure.
---      Transform a list, possibly holding lists as elements into a `flat' list by
---      replacing each list with its elements (recursively).
--- Example:
--- Example in Haskell:
--- We have to define a new data type, because lists in Haskell are homogeneous.
-data NestedList a
-  = Elem a
-  | List [NestedList a]
--- λ> problem7 (Elem 5)
--- [5]
--- λ> problem7 (List [Elem 1, List [Elem 2, List [Elem 3, Elem 4], Elem 5]])
--- [1,2,3,4,5]
--- λ> problem7 (List [])
--- []
-
-problem7 :: NestedList a -> [a]
-problem7 = undefined
 
 
+-- TODO ------------------------------- (based on question asked)
 -- Problem 8
 -- (**) Eliminate consecutive duplicates of list elements.
 --      If a list contains repeated elements they should be replaced with a single copy
@@ -121,81 +103,6 @@ problem8 (x:xs)
 	| otherwise = [x] ++ problem8 xs
 
 
--- Problem 9
--- (**) Pack consecutive duplicates of list elements into sublists. If a list contains
---      repeated elements they should be placed in separate sublists.
--- Example:
--- λ> problem9 ['a', 'a', 'a', 'a', 'b', 'c', 'c', 'a', 'a', 'd', 'e', 'e', 'e', 'e']
--- ["aaaa","b","cc","aa","d","eeee"]
-problem9 :: Eq a => [a] -> [[a]]
-problem9 = undefined
--- problem9 [x] = [[x]]
--- problem9 (x:xs)
--- 	| x == head xs = [[x] ++ head problem9 xs]
--- 	| otherwise = [x] ++ problem9 xs
-
-
--- Problem 10
--- (*) Run-length encoding of a list. Use the result of problem P09 to implement the
---     so-called run-length encoding data compression method. Consecutive duplicates
---     of elements are encoded as lists (N E) where N is the number of duplicates of
---     the element E.
--- Example:
--- λ> problem10 "aaaabccaadeeee"
--- [(4,'a'),(1,'b'),(2,'c'),(2,'a'),(1,'d'),(4,'e')]
-problem10 :: Eq a => [a] -> [(Int, a)]
-problem10 = undefined
-
-
--- Problem 11
--- (*) Modified run-length encoding.
---     Modify the result of problem 10 in such a way that if an element has no
---     duplicates it is simply copied into the result list. Only elements with
---     duplicates are transferred as (N E) lists.
---
--- Example in lisp (Where it kinda makes sense):
---
--- * (encode-modified '(a a a a b c c a a d e e e e))
--- ((4 A) B (2 C) (2 A) D (4 E))
--- Example in Haskell (where it does not, not so much without IO):
---
--- λ> problem11 "aaaabccaadeeee"
--- [Multiple 4 'a',Single 'b',Multiple 2 'c',Multiple 2 'a',Single 'd',Multiple 4 'e']
-data ListItem a
-  = Single a
-  | Multiple Int a
-  deriving (Show, Eq)
-
--- Modified run-length encoding.
-problem11 :: Eq a => [a] -> [ListItem a]
-problem11 = undefined
-
-
--- Problem 12
--- Decode a run-length encoded list.
--- (**) Decode a run-length encoded list.
---      Given a run-length code list generated asspecified in problem 11.
---      Construct its uncompressed version.
---
--- Example:
--- λ> problem12 [Multiple 4 'a',Single 'b',Multiple 2 'c', Multiple 2 'a',Single 'd']
--- "aaaabccaad"
-problem12 :: Eq a => [ListItem a] -> [a]
-problem12 = undefined
-
-
--- Problem 13
--- (**) Run-length encoding of a list (direct solution).
---      Implement the so-called run-length encoding data compression method directly. I.e.
---      don't explicitly create the sublists containing the duplicates, as in problem 9,
---      but only count them. As in problem P11, simplify the result list by replacing the
---      singleton lists (1 X) by X.
---
--- Example:
--- λ> problem13 "aaaabccaadeeee"
--- [Multiple 4 'a',Single 'b',Multiple 2 'c', Multiple 2 'a',Single 'd',Multiple 4 'e']
-problem13 :: Eq a => [a] -> [ListItem a]
-problem13 = undefined
 
 
 -- Problem 14
@@ -220,28 +127,6 @@ problem15 [x] n = replicate n x
 problem15 (x:xs) n = problem15 [x] n ++ problem15 xs n
 
 
--- Problem 16
--- (**) Drop every N'th element from a list.
---
--- Example:
--- λ> problem16 "abcdefghik" 3
--- "abdeghk"
-problem16 :: [a] -> Int -> [a]
-problem16 [] n = [] 
-problem16 (x:xs) n
-	| n == 1 = problem16 xs n
-	| otherwise = [x] ++ problem16 xs (n-1)
-	where current_counter = n
-
--- Problem 17
--- (*) Split a list into two parts; the length of the first part is given.
---     Do not use any predefined predicates.
---
--- Example:
--- λ> problem17 "abcdefghik" 3
--- ("abc", "defghik")
-problem17 :: [a] -> Int -> ([a], [a])
-problem17 = undefined
 
 
 -- Problem 18
@@ -258,6 +143,152 @@ problem18 [] i k = []
 problem18 (x:xs) i k
 	| i <= 1 && k >= 1 = [x] ++ problem18 xs (i-1) (k-1)
 	| otherwise = problem18 xs (i-1) (k-1)
+
+
+----------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+
+
+
+-- TODO ------------------------------- (No clue)
+-- Problem 7
+-- (**) Flatten a nested list structure.
+--      Transform a list, possibly holding lists as elements into a `flat' list by
+--      replacing each list with its elements (recursively).
+-- Example:
+-- Example in Haskell:
+-- We have to define a new data type, because lists in Haskell are homogeneous.
+data NestedList a
+  = Elem a
+  | List [NestedList a]
+-- λ> problem7 (Elem 5)
+-- [5]
+-- λ> problem7 (List [Elem 1, List [Elem 2, List [Elem 3, Elem 4], Elem 5]])
+-- [1,2,3,4,5]
+-- λ> problem7 (List [])
+-- []
+
+problem7 :: NestedList a -> [a]
+problem7 = undefined
+
+
+-- TODO ------------------------------- (based on question asked)
+-- Problem 9
+-- (**) Pack consecutive duplicates of list elements into sublists. If a list contains
+--      repeated elements they should be placed in separate sublists.
+-- Example:
+-- λ> problem9 ['a', 'a', 'a', 'a', 'b', 'c', 'c', 'a', 'a', 'd', 'e', 'e', 'e', 'e']
+-- ["aaaa","b","cc","aa","d","eeee"]
+problem9 :: Eq a => [a] -> [[a]]
+problem9 [x] = [[x]]
+problem9 (x:xs)
+ 	| x == head xs = [[x] ++ head (problem9 xs)] ++ tail (problem9 xs)
+	| otherwise = [[x]] ++ problem9 xs
+
+
+
+-- Problem 10
+-- (*) Run-length encoding of a list. Use the result of problem P09 to implement the
+--     so-called run-length encoding data compression method. Consecutive duplicates
+--     of elements are encoded as lists (N E) where N is the number of duplicates of
+--     the element E.
+-- Example:
+-- λ> problem10 "aaaabccaadeeee"
+-- [(4,'a'),(1,'b'),(2,'c'),(2,'a'),(1,'d'),(4,'e')]
+problem10 :: Eq a => [a] -> [(Int, a)]
+problem10 = undefined
+-- problem10 [x] = [(1, x)]
+-- problem10 (x:xs) 
+--	| x == head xs = head problem10 xs
+--	| otherwise = 
+-- problem10 [x] = [(1, x)]
+-- problem10 (x:xs)
+-- 	| x == head xs = head problem10 xs
+
+
+-- TODO ------------------------------- (based on question asked)
+-- Problem 11
+-- (*) Modified run-length encoding.
+--     Modify the result of problem 10 in such a way that if an element has no
+--     duplicates it is simply copied into the result list. Only elements with
+--     duplicates are transferred as (N E) lists.
+--
+-- Example in lisp (Where it kinda makes sense):
+--
+-- * (encode-modified '(a a a a b c c a a d e e e e))
+-- ((4 A) B (2 C) (2 A) D (4 E))
+-- Example in Haskell (where it does not, not so much without IO):
+--
+-- λ> problem11 "aaaabccaadeeee"
+-- [Multiple 4 'a',Single 'b',Multiple 2 'c',Multiple 2 'a',Single 'd',Multiple 4 'e']
+data ListItem a
+  = Single a
+  | Multiple Int a
+  deriving (Show, Eq)
+
+-- Modified run-length encoding.
+problem11 :: Eq a => [a] -> [ListItem a]
+problem11 = undefined
+
+-- TODO ------------------------------- (based on question asked)
+-- Problem 12
+-- Decode a run-length encoded list.
+-- (**) Decode a run-length encoded list.
+--      Given a run-length code list generated asspecified in problem 11.
+--      Construct its uncompressed version.
+--
+-- Example:
+-- λ> problem12 [Multiple 4 'a',Single 'b',Multiple 2 'c', Multiple 2 'a',Single 'd']
+-- "aaaabccaad"
+problem12 :: Eq a => [ListItem a] -> [a]
+problem12 = undefined
+
+-- TODO ------------------------------- (based on question asked)
+-- Problem 13
+-- (**) Run-length encoding of a list (direct solution).
+--      Implement the so-called run-length encoding data compression method directly. I.e.
+--      don't explicitly create the sublists containing the duplicates, as in problem 9,
+--      but only count them. As in problem P11, simplify the result list by replacing the
+--      singleton lists (1 X) by X.
+--
+-- Example:
+-- λ> problem13 "aaaabccaadeeee"
+-- [Multiple 4 'a',Single 'b',Multiple 2 'c', Multiple 2 'a',Single 'd',Multiple 4 'e']
+problem13 :: Eq a => [a] -> [ListItem a]
+problem13 = undefined
+
+
+
+
+-- TODO ------------------------------- (based on question asked)
+-- Problem 16
+-- (**) Drop every N'th element from a list.
+--
+-- Example:
+-- λ> problem16 "abcdefghik" 3
+-- "abdeghk"
+problem16 :: [a] -> Int -> [a]
+problem16 [] n = [] 
+problem16 (x:xs) n
+	| n == 1 = problem16 xs n
+	| otherwise = [x] ++ problem16 xs (n-1)
+	where current_counter = n
+
+
+
+-- TODO ------------------------------- (based on question asked)
+-- Problem 17
+-- (*) Split a list into two parts; the length of the first part is given.
+--     Do not use any predefined predicates.
+--
+-- Example:
+-- λ> problem17 "abcdefghik" 3
+-- ("abc", "defghik")
+problem17 :: [a] -> Int -> ([a], [a])
+problem17 = undefined
+
+
+
 
 
 -- Problem 19
@@ -291,7 +322,11 @@ problem20 = undefined
 -- λ> problemA [1,3,4] [2,5,6]
 -- [1,2,3,4,5,6]
 problemA :: Ord a => [a] -> [a] -> [a]
-problemA = undefined
+problemA [] [] = []
+problemA (x:xs) (y:ys)
+	| x < y = [x] ++ problemA (xs) (y:ys)
+	| x > y = [y] ++ problemA (x:xs) (ys)
+
 
 
 -- Problem B
@@ -303,3 +338,6 @@ problemA = undefined
 -- [1,2,3,4]
 problemB :: Ord a => [a] -> [a]
 problemB = undefined
+
+
+
