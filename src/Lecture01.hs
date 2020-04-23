@@ -296,6 +296,42 @@ problem13 :: Eq a => [a] -> [ListItem a]
 problem13 (x:xs) = encoder (problem10 (x:xs))
 
 
+-- Problem B
+-- (*) Implement merge-sort
+--     Given a list returna  sorted list using merge sort algorithm you can use the merge
+--     from previous problem
+-- Example:
+-- λ> problemB [4,3,2,1]
+-- [1,2,3,4]
+problemB :: Ord a => [a] -> [a]
+problemB [] = []
+problemB [x] = [x]
+problemB a
+	| length a == 1 = a
+	| otherwise = problemA (problemB (fst (problem17 a ((length a) `div` 2)))) (problemB (snd (problem17 a ((length a) `div` 2))))
+
+
+rotator :: [a] -> Int -> [a]
+rotator [] n = []
+rotator a n = snd (problem17 a n) ++ fst (problem17 a n) 
+
+-- Problem 19
+-- (**) Rotate a list N places to the left.
+--
+-- Hint: Use the predefined functions length and (++).
+--
+-- Examples:
+-- λ> problem19 ['a','b','c','d','e','f','g','h'] 3
+-- "defghabc"
+-- λ> problem19 ['a','b','c','d','e','f','g','h'] (-2)
+-- "ghabcdef"
+problem19 :: [a] -> Int -> [a]
+problem19 a n
+	| n < 0 = rotator a (length a + (n))
+	| otherwise = rotator a n 
+
+
+
 
 
 
@@ -347,36 +383,8 @@ problem12 = undefined
 
 
 
-
--- Problem 19
--- (**) Rotate a list N places to the left.
---
--- Hint: Use the predefined functions length and (++).
---
--- Examples:
--- λ> problem19 ['a','b','c','d','e','f','g','h'] 3
--- "defghabc"
--- λ> problem19 ['a','b','c','d','e','f','g','h'] (-2)
--- "ghabcdef"
-problem19 :: [a] -> Int -> [a]
-problem19 = undefined
-
  
 
-
--- Problem B
--- (*) Implement merge-sort
---     Given a list returna  sorted list using merge sort algorithm you can use the merge
---     from previous problem
--- Example:
--- λ> problemB [4,3,2,1]
--- [1,2,3,4]
-problemB :: Ord a => [a] -> [a]
-problemB [] = []
-problemB [x] = [x]
-problemB a
-	| length a == 1 = a
-	| otherwise = problemA (problemB (fst (problem17 a ((length a) `div` 2)))) (problemB (snd (problem17 a ((length a) `div` 2))))
 
 
 
