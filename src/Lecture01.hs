@@ -361,9 +361,7 @@ problem12 = undefined
 problem19 :: [a] -> Int -> [a]
 problem19 = undefined
 
-
-
-
+ 
 
 
 -- Problem B
@@ -374,7 +372,11 @@ problem19 = undefined
 -- λ> problemB [4,3,2,1]
 -- [1,2,3,4]
 problemB :: Ord a => [a] -> [a]
-problemB = undefined
+problemB [] = []
+problemB [x] = [x]
+problemB a
+	| length a == 1 = a
+	| otherwise = problemA (problemB (fst (problem17 a ((length a) `div` 2)))) (problemB (snd (problem17 a ((length a) `div` 2))))
 
 
 
