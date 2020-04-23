@@ -360,13 +360,12 @@ data NestedList a
 
 problem7 :: NestedList a -> [a]
 problem7 = undefined
+-- problem7 (Elem a) = [a]
+-- problem7 (x:xs) = [problem7 x] ++ problem7 xs
 
 
 
 
-
-
--- TODO ------------------------------- (based on question asked)
 -- Problem 12
 -- Decode a run-length encoded list.
 -- (**) Decode a run-length encoded list.
@@ -377,8 +376,13 @@ problem7 = undefined
 -- λ> problem12 [Multiple 4 'a',Single 'b',Multiple 2 'c', Multiple 2 'a',Single 'd']
 -- "aaaabccaad"
 
+helper :: Eq a => ListItem a -> [a]
+helper (Single x) = [x]
+helper (Multiple n x) = replicate n x
+
 problem12 :: Eq a => [ListItem a] -> [a]
-problem12 = undefined 
+problem12 [] = []
+problem12 (x:xs) = helper(x) ++ problem12(xs)
 
 
 
