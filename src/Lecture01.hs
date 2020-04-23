@@ -241,6 +241,61 @@ problem16 (x:xs) n = counter (x:xs) n n
 
 
 
+-- TODO ------------------------------- (based on question asked)
+-- Problem 11
+-- (*) Modified run-length encoding.
+--     Modify the result of problem 10 in such a way that if an element has no
+--     duplicates it is simply copied into the result list. Only elements with
+--     duplicates are transferred as (N E) lists.
+--
+-- Example in lisp (Where it kinda makes sense):
+--
+-- * (encode-modified '(a a a a b c c a a d e e e e))
+-- ((4 A) B (2 C) (2 A) D (4 E))
+-- Example in Haskell (where it does not, not so much without IO):
+--
+-- λ> problem11 "aaaabccaadeeee"
+-- [Multiple 4 'a',Single 'b',Multiple 2 'c',Multiple 2 'a',Single 'd',Multiple 4 'e']
+
+
+
+
+data ListItem a
+  = Single a
+  | Multiple Int a
+  deriving (Show, Eq)
+
+encoder :: [(Int, a)] -> [ListItem a]
+encoder [] = []
+encoder (x:xs)
+	| fst x == 1 = [Single (snd x)] ++ encoder xs
+	| otherwise = [Multiple (fst x) (snd x)] ++ encoder xs
+
+-- Modified run-length encoding.
+problem11 :: Eq a => [a] -> [ListItem a]
+problem11 (x:xs) = encoder (problem10 (x:xs))
+
+
+
+-- TODO ------------------------------- (based on question asked)
+-- Problem 13
+-- (**) Run-length encoding of a list (direct solution).
+--      Implement the so-called run-length encoding data compression method directly. I.e.
+--      don't explicitly create the sublists containing the duplicates, as in problem 9,
+--      but only count them. As in problem P11, simplify the result list by replacing the
+--      singleton lists (1 X) by X.
+--
+-- Example:
+-- λ> problem13 "aaaabccaadeeee"
+-- [Multiple 4 'a',Single 'b',Multiple 2 'c', Multiple 2 'a',Single 'd',Multiple 4 'e']
+
+
+
+-- Modified run-length encoding.
+problem13 :: Eq a => [a] -> [ListItem a]
+problem13 (x:xs) = encoder (problem10 (x:xs))
+
+
 
 
 
@@ -273,40 +328,6 @@ problem7 = undefined
 
 
 
--- TODO ------------------------------- (based on question asked)
--- Problem 11
--- (*) Modified run-length encoding.
---     Modify the result of problem 10 in such a way that if an element has no
---     duplicates it is simply copied into the result list. Only elements with
---     duplicates are transferred as (N E) lists.
---
--- Example in lisp (Where it kinda makes sense):
---
--- * (encode-modified '(a a a a b c c a a d e e e e))
--- ((4 A) B (2 C) (2 A) D (4 E))
--- Example in Haskell (where it does not, not so much without IO):
---
--- λ> problem11 "aaaabccaadeeee"
--- [Multiple 4 'a',Single 'b',Multiple 2 'c',Multiple 2 'a',Single 'd',Multiple 4 'e']
-
-
-
-data ListItem a
-  = Single a
-  | Multiple Int a
-  deriving (Show, Eq)
-
-encoder :: [(Int, a)] -> [ListItem a]
-encoder [] = []
-encoder (x:xs)
-	| fst x == 1 = [Single (snd x)] ++ encoder xs
-	| otherwise = [Multiple (fst x) (snd x)] ++ encoder xs
-
--- Modified run-length encoding.
-problem11 :: Eq a => [a] -> [ListItem a]
-problem11 (x:xs) = encoder (problem10 (x:xs))
-
-
 
 
 -- TODO ------------------------------- (based on question asked)
@@ -319,22 +340,10 @@ problem11 (x:xs) = encoder (problem10 (x:xs))
 -- Example:
 -- λ> problem12 [Multiple 4 'a',Single 'b',Multiple 2 'c', Multiple 2 'a',Single 'd']
 -- "aaaabccaad"
-problem12 :: Eq a => [ListItem a] -> [a]
-problem12 = undefined
 
--- TODO ------------------------------- (based on question asked)
--- Problem 13
--- (**) Run-length encoding of a list (direct solution).
---      Implement the so-called run-length encoding data compression method directly. I.e.
---      don't explicitly create the sublists containing the duplicates, as in problem 9,
---      but only count them. As in problem P11, simplify the result list by replacing the
---      singleton lists (1 X) by X.
---
--- Example:
--- λ> problem13 "aaaabccaadeeee"
--- [Multiple 4 'a',Single 'b',Multiple 2 'c', Multiple 2 'a',Single 'd',Multiple 4 'e']
-problem13 :: Eq a => [a] -> [ListItem a]
-problem13 = undefined
+problem12 :: Eq a => [ListItem a] -> [a]
+problem12 = undefined 
+
 
 
 
