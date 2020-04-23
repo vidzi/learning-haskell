@@ -202,6 +202,48 @@ problem17 (x:xs) n
 	| n > 1 = ([x] ++ (fst (problem17 xs (n-1))), snd (problem17 xs (n-1)))
 
 
+
+
+-- Problem A
+-- (*) Implement merge:
+--     Given two sorted lists give out a sorted list
+-- Example:
+-- λ> problemA [1,3,4] [2,5,6]
+-- [1,2,3,4,5,6]
+problemA :: Ord a => [a] -> [a] -> [a]
+problemA [] [] = []
+problemA (x:xs) [] = (x:xs)
+problemA [] (y:ys) = (y:ys)
+problemA (x:xs) (y:ys)
+	| x < y = [x] ++ problemA (xs) (y:ys)
+	| x >= y = [y] ++ problemA (x:xs) (ys)
+
+
+-- TODO ------------------------------- (based on question asked)
+-- Problem 16
+-- (**) Drop every N'th element from a list.
+--
+-- Example:
+-- λ> problem16 "abcdefghik" 3
+-- "abdeghk"
+
+counter :: [a] -> Int -> Int -> [a]
+counter [] n m = []
+counter [x] n m = [x]
+counter (x:xs) n m
+	| n == 1 = counter xs m m
+	| otherwise = [x] ++ counter xs (n-1) m
+
+
+problem16 :: [a] -> Int -> [a]
+problem16 [] n = [] 
+problem16 (x:xs) n = counter (x:xs) n n
+
+
+
+
+
+
 ----------------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------------
 
@@ -229,28 +271,6 @@ problem7 :: NestedList a -> [a]
 problem7 = undefined
 
 
--- TODO ------------------------------- (based on question asked)
--- Problem 16
--- (**) Drop every N'th element from a list.
---
--- Example:
--- λ> problem16 "abcdefghik" 3
--- "abdeghk"
-
-counter :: [a] -> Int -> Int -> [a]
-counter [] n m = []
-counter [x] n m = [x]
-counter (x:xs) n m
-	| n == 1 = counter xs m m
-	| otherwise = [x] ++ counter xs (n-1) m
-
-
-problem16 :: [a] -> Int -> [a]
-problem16 [] n = [] 
-problem16 (x:xs) n = counter (x:xs) n n
-
-
-
 
 
 -- TODO ------------------------------- (based on question asked)
@@ -268,14 +288,26 @@ problem16 (x:xs) n = counter (x:xs) n n
 --
 -- λ> problem11 "aaaabccaadeeee"
 -- [Multiple 4 'a',Single 'b',Multiple 2 'c',Multiple 2 'a',Single 'd',Multiple 4 'e']
+
+
+
 data ListItem a
   = Single a
   | Multiple Int a
   deriving (Show, Eq)
 
+encoder :: [(Int, a)] -> [ListItem a]
+encoder [] = []
+encoder (x:xs)
+	| fst x == 1 = [Single (snd x)] ++ encoder xs
+	| otherwise = [Multiple (fst x) (snd x)] ++ encoder xs
+
 -- Modified run-length encoding.
 problem11 :: Eq a => [a] -> [ListItem a]
-problem11 = undefined
+problem11 (x:xs) = encoder (problem10 (x:xs))
+
+
+
 
 -- TODO ------------------------------- (based on question asked)
 -- Problem 12
@@ -322,20 +354,6 @@ problem19 = undefined
 
 
 
-
--- Problem A
--- (*) Implement merge:
---     Given two sorted lists give out a sorted list
--- Example:
--- λ> problemA [1,3,4] [2,5,6]
--- [1,2,3,4,5,6]
-problemA :: Ord a => [a] -> [a] -> [a]
-problemA [] [] = []
-problemA (x:xs) [] = (x:xs)
-problemA [] (y:ys) = (y:ys)
-problemA (x:xs) (y:ys)
-	| x < y = [x] ++ problemA (xs) (y:ys)
-	| x >= y = [y] ++ problemA (x:xs) (ys)
 
 
 
