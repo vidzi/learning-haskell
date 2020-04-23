@@ -175,6 +175,33 @@ problem10 (x:xs)
 	| otherwise = [(1, x)] ++ problem10 xs 
 
 
+-- Problem 20
+-- (*) Remove the K'th element from a list.
+--
+-- Example:
+-- λ> problem20 2 "abcd"
+-- ('b',"acd")
+problem20 :: Int -> [a] -> (a, [a])
+problem20 n [x]  =  (x, [x])
+problem20 n (x:xs) 
+	| n > 1 || n < 1 =  (fst (problem20 (n-1) xs), [x] ++ snd (problem20 (n-1) xs) )
+	| n == 1 = (x , snd (problem20 (n-1) xs))
+
+
+-- Problem 17
+-- (*) Split a list into two parts; the length of the first part is given.
+--     Do not use any predefined predicates.
+--
+-- Example:
+-- λ> problem17 "abcdefghik" 3
+-- ("abc", "defghik")
+problem17 :: [a] -> Int -> ([a], [a])
+problem17 [] n = ([], [])
+problem17 (x:xs) n
+	| n == 1 = ([x], xs)
+	| n > 1 = ([x] ++ (fst (problem17 xs (n-1))), snd (problem17 xs (n-1)))
+
+
 ----------------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------------
 
@@ -266,27 +293,22 @@ problem13 = undefined
 -- Example:
 -- λ> problem16 "abcdefghik" 3
 -- "abdeghk"
+
+counter :: [a] -> Int -> Int -> [a]
+counter [] n m = []
+counter [x] n m = [x]
+counter (x:xs) n m
+	| n == 1 = counter xs m m
+	| otherwise = [x] ++ counter xs (n-1) m
+
+
 problem16 :: [a] -> Int -> [a]
 problem16 [] n = [] 
-problem16 (x:xs) n
-	| n == 1 = problem16 xs n
-	| otherwise = [x] ++ problem16 xs (n-1)
-	where current_counter = n
+problem16 (x:xs) n = counter (x:xs) n n
 
 
 
--- Problem 17
--- (*) Split a list into two parts; the length of the first part is given.
---     Do not use any predefined predicates.
---
--- Example:
--- λ> problem17 "abcdefghik" 3
--- ("abc", "defghik")
-problem17 :: [a] -> Int -> ([a], [a])
-problem17 [] n = ([], [])
-problem17 (x:xs) n
-	| n == 1 = ([x], xs)
-	| n > 1 = ([x] ++ (fst (problem17 xs (n-1))), snd (problem17 xs (n-1)))
+ 
 
 
 
@@ -305,17 +327,6 @@ problem19 :: [a] -> Int -> [a]
 problem19 = undefined
 
 
--- Problem 20
--- (*) Remove the K'th element from a list.
---
--- Example:
--- λ> problem20 2 "abcd"
--- ('b',"acd")
-problem20 :: Int -> [a] -> (a, [a])
-problem20 n [x]  =  (x, [x])
-problem20 n (x:xs) 
-	| n > 1 || n < 1 =  (fst (problem20 (n-1) xs), [x] ++ snd (problem20 (n-1) xs) )
-	| n == 1 = (x , snd (problem20 (n-1) xs))
 
 
 -- Problem A
