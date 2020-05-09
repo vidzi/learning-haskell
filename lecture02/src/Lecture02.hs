@@ -145,7 +145,9 @@ filterCodes move xs = foldl (\acc x -> if (isConsistent move x == True) then (x 
 -- take in a length2 and return all Codes of that length:
 -- allCodes :: Int -> [Code]
 allCodes :: Int -> [Code]
-allCodes = undefined
+allCodes 0 = []
+allCodes 1 = [[Red], [Green], [Blue], [Yellow], [Orange], [Purple]]
+allCodes n = foldl (\acc x -> (map ([x] ++) (allCodes (n-1))) ++ acc) [] [Red, Green, Blue, Yellow, Orange, Purple]
 
 
 -- Exercise 7 We are now finally ready to write our Mastermind
