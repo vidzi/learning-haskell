@@ -193,6 +193,13 @@ data ScrewedUpType = ADummy | BDummy deriving (Show, Eq)
 -- Exercise 9: Implement nth fibonacci number
 -- This question has incremental difficulty levels. Take a look at the test case
 -- for more info
+secondLast :: [a] -> a
+secondLast [] = error "Cant work"
+secondLast [x] = error "Cant work"
+secondLast [x,y] = x
+secondLast (x:xs) = secondLast xs
 
 fib :: Int -> Integer
-fib = undefined
+fib 0 = 0
+fib 1 = 1
+fib n = last $ foldl (\acc x -> acc ++ [(last acc) + (secondLast acc)]) [0, 1] [2..n]
