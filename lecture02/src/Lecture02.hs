@@ -86,7 +86,7 @@ countColors xs = Map.elems $ foldl (\acc x -> Map.insert x ((Map.findWithDefault
 -- Example: matches [Red, Blue, Yellow, Orange] [Red, Orange, Orange, Blue] == 3
 --
 matches :: Code -> Code -> Int
-matches xs ys = undefined
+matches xs ys = foldl (+) 0 $ zipWith (\a b -> if a < b then a else b) (countColors(xs)) (countColors(ys))
 
 
 -- Exercise 3 A Move is a new datatype that is constructed with a Code
