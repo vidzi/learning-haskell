@@ -119,7 +119,11 @@ getMove xs ys =
 -- Example: isConsistent (Move [Red, Red, Blue, Green] 1 1) [Red, Blue, Yellow, Purple] == True
 -- Example: isConsistent (Move [Red, Red, Blue, Green] 1 1) [Red, Blue, Red, Purple] == False
 isConsistent :: Move -> Code -> Bool
-isConsistent = undefined
+isConsistent (Move code exact_match unexact_match) secret = 
+  let exactMatchCount = exactMatches code secret
+      unexactMatchCount = (matches code secret) - exactMatchCount
+  in exact_match == exactMatchCount && unexactMatchCount == unexact_match
+
 
 -- Exercise 5 Now that we have the concept of consistency, we can
 -- filter a list of Codes to only contain those that are consistent with a
