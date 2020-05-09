@@ -132,7 +132,7 @@ isConsistent (Move code exact_match unexact_match) secret =
 -- on each new move until there is only one code left. Implement the
 -- function:
 filterCodes :: Move -> [Code] -> [Code]
-filterCodes = undefined
+filterCodes move xs = foldl (\acc x -> if (isConsistent move x == True) then (x : acc) else acc) [] xs
 
 
 -- Exercise 6 As mentioned in Exercise 5, the final algorithm will start
