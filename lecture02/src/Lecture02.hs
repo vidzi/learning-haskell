@@ -103,7 +103,10 @@ data Move =
 -- the resulting Move.
 -- Example: getMove [Red, Blue, Yellow, Orange] [Red, Orange, Orange, Blue] == Move [Red, Orange, Orange, Blue] 1 2
 getMove :: Code -> Code -> Move
-getMove xs ys = undefined
+getMove xs ys = 
+  let exactMatchCount = exactMatches xs ys 
+      totalMatchCount = matches xs ys
+  in Move ys exactMatchCount (totalMatchCount - exactMatchCount)
 
 -- Exercise 4 We will now define a concept that will be important
 -- in playing the Mastermind game. This is the concept of consistency;
