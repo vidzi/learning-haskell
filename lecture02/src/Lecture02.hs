@@ -51,7 +51,7 @@ colors = [Red, Green, Blue, Yellow, Orange, Purple]
 -- Example: exactMatches [Red, Blue, Green, Yellow] [Blue, Green, Yellow, Red] == 0
 -- Example: exactMatches [Red, Blue, Green, Yellow] [Red, Purple, Green, Orange] == 2
 exactMatches :: Code -> Code -> Int
-exactMatches xs ys = undefined
+exactMatches xs ys = length $ filter (==True) $ zipWith (==) xs ys
  
 
 -- Exercise 2 Now you will write a function that returns the number
