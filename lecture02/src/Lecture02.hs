@@ -172,7 +172,9 @@ allCodes n = foldl (\acc x -> (map ([x] ++) (allCodes (n-1))) ++ acc) [] [Red, G
 -- Always start by guessing [Red, Red, Red, ..., Red]. This will
 -- make it easier for us to test your outputs.
 solve :: Code -> [Move]
-solve = undefined
+solve secret = 
+  let guesses = allCodes $ length secret
+  in foldl (\acc x -> if (isConsistent  (Move x 4 0) secret) then (Move x 4 0) : acc else acc) [] guesses 
 
 
 
