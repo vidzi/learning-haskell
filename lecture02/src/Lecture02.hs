@@ -77,8 +77,9 @@ exactMatches xs ys = length $ filter (==True) $ zipWith (==) xs ys
 -- Example: countColors [Red, Blue, Yellow, Purple] == [1, 0, 1, 1, 0, 1]
 -- Example: countColors [Green, Blue, Green, Orange] == [0, 2, 1, 0, 1, 0]
 
+
 countColors :: Code -> [Int]
-countColors xs = undefined
+countColors xs = Map.elems $ foldl (\acc x -> Map.insert x ((Map.findWithDefault 0 x acc)+1) acc) (Map.fromList [(Red, 0),(Green, 0),(Blue, 0),(Yellow, 0),(Orange, 0),(Purple, 0)]) xs
 
 -- Now you are ready to implement the main function: matches
 -- matches :: Code -> Code -> Int
