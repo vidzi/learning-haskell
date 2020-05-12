@@ -185,7 +185,9 @@ solve secret =
 -- always true.
 -- Example: ADummy == BDummy -> True
 -- Example: ADummy == ADummy -> True
-data ScrewedUpType = ADummy | BDummy deriving (Show, Eq)
+data ScrewedUpType = ADummy | BDummy deriving (Show)
+instance Eq ScrewedUpType where   
+    _ == _ = True  
 
 
 -- PART 3: Extra fun
