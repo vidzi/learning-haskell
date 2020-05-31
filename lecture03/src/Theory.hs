@@ -59,7 +59,7 @@ instance Functor Listy where
     fmap f (Listy a) = Listy (foldl (\acc x -> acc ++ [(f x)]) [] a)
 
 instance Functor ZipListy where
-    fmap = undefined
+    fmap f (ZipListy a) = ZipListy (foldl (\acc x -> acc ++ [(f x)]) [] a)
 
 -- Exercise 3: Implement Applicative instances for the following types
 
