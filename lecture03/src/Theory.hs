@@ -56,7 +56,7 @@ instance Functor (Validation a) where
     fmap f (Failure x) = Failure x  
 
 instance Functor Listy where
-    fmap = undefined
+    fmap f (Listy a) = Listy (foldl (\acc x -> acc ++ [(f x)]) [] a)
 
 instance Functor ZipListy where
     fmap = undefined
