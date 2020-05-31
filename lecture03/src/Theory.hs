@@ -47,7 +47,8 @@ instance (Semigroup a, Semigroup b) => Semigroup (Validation a b) where
 
 -- Functor declaration for Optional
 instance Functor Optional where
-    fmap = undefined
+    fmap f Nada = Nada
+    fmap f (Only a) = Only (f a)
 
 -- Functor declaration for Validation
 instance Functor (Validation a) where
