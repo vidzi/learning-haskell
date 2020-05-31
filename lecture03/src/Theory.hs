@@ -52,7 +52,8 @@ instance Functor Optional where
 
 -- Functor declaration for Validation
 instance Functor (Validation a) where
-    fmap = undefined
+    fmap f (Success x) = Success (f x)  
+    fmap f (Failure x) = Failure x  
 
 instance Functor Listy where
     fmap = undefined
