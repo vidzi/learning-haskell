@@ -16,7 +16,8 @@ data Validation a b = Failure a | Success b deriving (Eq, Show)
 
 -- Semigroup declaration for Booly
 instance Semigroup Booly where
-    (<>) = undefined
+    (<>) True' True' = True'
+    (<>) a b = False'
 
 -- Monoid instance declaration for Booly
 instance Monoid Booly where
@@ -64,8 +65,9 @@ instance Functor ZipListy where
 -- Exercise 3: Implement Applicative instances for the following types
 
 instance Applicative Optional where
-    pure = undefined
-    (<*>) = undefined
+    pure = Only
+    Nada <*> _ = Nada
+    (Only f) <*> something = fmap f something
 
 
 instance Applicative Listy where
