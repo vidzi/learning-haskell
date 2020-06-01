@@ -35,7 +35,7 @@ instance Monoid a => Monoid (Optional a) where
 
 -- Semigroup declaration for Listy
 instance Semigroup (Listy a) where
-    (<>) = undefined
+    (<>) (Listy a) (Listy b) =  Listy (a ++ b)
 
 -- Monoid declaration for Listy
 instance Monoid (Listy a) where
