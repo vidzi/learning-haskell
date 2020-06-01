@@ -25,7 +25,9 @@ instance Monoid Booly where
 
 -- Semigroup declaration for Optional
 instance Semigroup a => Semigroup (Optional a) where
-    (<>) = undefined
+    (<>) Nada _ = Nada
+    (<>) _ Nada = Nada
+    (<>) (Only a) (Only b) = Only (a <> b)
 
 -- Monoid declaration for Optional
 instance Monoid a => Monoid (Optional a) where
