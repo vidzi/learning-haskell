@@ -21,7 +21,8 @@ instance Semigroup Booly where
 
 -- Monoid instance declaration for Booly
 instance Monoid Booly where
-    mempty = undefined
+    mempty = True'
+    x `mappend` y = x <> y  
 
 -- Semigroup declaration for Optional
 instance Semigroup a => Semigroup (Optional a) where
