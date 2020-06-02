@@ -32,7 +32,9 @@ instance Semigroup a => Semigroup (Optional a) where
 
 -- Monoid declaration for Optional
 instance Monoid a => Monoid (Optional a) where
-    mempty = undefined
+    mempty = Nada 
+    x `mappend` y = x <> y
+
 
 -- Semigroup declaration for Listy
 instance Semigroup (Listy a) where
