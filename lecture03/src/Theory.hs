@@ -42,7 +42,8 @@ instance Semigroup (Listy a) where
 
 -- Monoid declaration for Listy
 instance Monoid (Listy a) where
-    mempty = undefined
+    mempty = Listy []
+    x `mappend` y = x <> y
 
 -- Semigroup declaration for Validation
 instance (Semigroup a, Semigroup b) => Semigroup (Validation a b) where
