@@ -43,8 +43,8 @@ instance Monoid (Listy a) where
 
 -- Semigroup declaration for Validation
 instance (Semigroup a, Semigroup b) => Semigroup (Validation a b) where
-    (<>) = undefined
-
+    Failure _ <> b = b
+    a  <> _ = a
 
 -- Exercise 2: Implement Functor instance for the following types
 
