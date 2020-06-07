@@ -61,13 +61,9 @@ noParser = P (\_ -> Nothing)
 pureParserFunction :: String -> Maybe (String, String)
 pureParserFunction a = Just (a, a)
 
-pureParser :: Char -> Parser Char
-pureParser '' = 
 
 pureParser :: a -> Parser a
-pureParser a 
-    | isChar a == True = noParser
-    | otherwise = P (pureParserFunction)
+pureParser a = P (\x -> if x == "" then Just (a, "") else Nothing)
 
 
 
