@@ -56,8 +56,22 @@ noParser = P (\_ -> Nothing)
 -- You should have
 -- parse (pureParser x) "" == Just x
 -- xs ≠ "" ⇒ parse (pureParser x) xs == Nothing
+
+
+pureParserFunction :: String -> Maybe (String, String)
+pureParserFunction a = Just (a, a)
+
+pureParser :: Char -> Parser Char
+pureParser '' = 
+
 pureParser :: a -> Parser a
-pureParser input =  P (\x -> Nothing)
+pureParser a 
+    | isChar a == True = noParser
+    | otherwise = P (pureParserFunction)
+
+
+
+
 
 
 -- Declare Functor, Applicative and Monad for Parser
@@ -104,6 +118,8 @@ char = undefined
 -- Note: without breaking the abstraction introduced by the Parser data type,
 -- i.e. using only the combinators introduced above. You can use do-notation
 -- if you want.
+
+
 anyCharBut :: Char -> Parser Char
 anyCharBut = undefined
 
@@ -118,7 +134,10 @@ anyCharBut = undefined
 -- parse (anyChar `orElse` pureParser '☃') [c] == Just c
 -- length xs > 1 ⇒ parse (anyChar `orElse` pureParser '☃') xs == Nothing
 orElse :: Parser a -> Parser a -> Parser a
-orElse = undefined
+orElse noParser p = p
+orElse pureParser _ = pureParser
+
+
 
 
 -- Parser combinator which applies the given parser as often as possible until
