@@ -57,7 +57,7 @@ noParser = P (\_ -> Nothing)
 -- parse (pureParser x) "" == Just x
 -- xs ≠ "" ⇒ parse (pureParser x) xs == Nothing
 pureParser :: a -> Parser a
-pureParser a = P (\_ -> (Just (a, "")))
+pureParser input =  P (\x -> Nothing)
 
 
 -- Declare Functor, Applicative and Monad for Parser
@@ -81,8 +81,15 @@ instance Monad Parser where
 -- parse anyChar "" == Nothing
 -- parse anyChar [c] == Just c
 -- length xs > 1 ⇒ parse anyChar xs == Nothing
+
+
+charParserFunction :: String -> Maybe (Char, String)
+charParserFunction "" = Nothing
+charParserFunction [x] = Just (x, "")
+charParserFunction xs  = Nothing
+
 anyChar :: Parser Char
-anyChar = undefined
+anyChar = P (charParserFunction)
 
 
 -- Parser which consumes a character matching
