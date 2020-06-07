@@ -31,18 +31,25 @@ data Parser a = P (String -> Maybe (a, String))
 runParser :: Parser t -> String -> Maybe (t, String)
 runParser (P p) = p
 
+extractElement :: Maybe (t, String) -> Maybe t
+extractElement (Just (x, y)) = Just x
+extractElement Nothing = Nothing
+
+
 
 -- `parse` is the main entry point to run a parser. It shall return successfully
 -- only if the parser consumed the whole input, i.e. if the function inside
 -- the Parser a returns a value of type a along with the empty string.
 parse :: Parser a -> String -> Maybe a
-parse = undefined
+parse parser input = extractElement $ (runParser parser input)  
+
 
 
 -- Define a always failing Parser
 -- parse noParser input == Nothing
 noParser :: Parser a
-noParser = undefined
+noParser = P (\_ -> Nothing)
+
 
 
 -- Define a parser that consumes no input and returns its argument.
@@ -50,7 +57,7 @@ noParser = undefined
 -- parse (pureParser x) "" == Just x
 -- xs ≠ "" ⇒ parse (pureParser x) xs == Nothing
 pureParser :: a -> Parser a
-pureParser = undefined
+pureParser a = P (\_ -> (Just (a, "")))
 
 
 -- Declare Functor, Applicative and Monad for Parser
