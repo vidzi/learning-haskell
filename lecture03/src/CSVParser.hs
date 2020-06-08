@@ -156,8 +156,18 @@ orElse x y = P p'
 -- Implement this again without breaking the abstraction, using the combinators
 -- above.
 
+manyParser :: Parser a -> String -> [a] -> Maybe ([a], String)
+manyParser x input history = case runParser x input of
+            Just (result, rest) ->  Just (history ++ [result], rest) 
+            Nothing -> Just (history ++ [], input)
+
 many :: Parser a -> Parser [a]
-many = undefined
+many x = P p'
+      where
+        p' input = case manyParser x input [] of
+           Just (result, rest) -> if rest == "" then Just (result, rest) else (manyParser x rest result)
+
+
 
 
 -- Parser combinator so that p1 `sepBy` p2 applies the p1, then p2, then p1 and
