@@ -31,17 +31,21 @@ data Parser a = P (String -> Maybe (a, String))
 runParser :: Parser t -> String -> Maybe (t, String)
 runParser (P p) = p
 
+
 extractElement :: Maybe (t, String) -> Maybe t
-extractElement (Just (x, y)) = Just x
+extractElement (Just (x, "")) = Just x
 extractElement Nothing = Nothing
+extractElement (Just (x, _)) = Nothing
 
-
+extractRemainingString :: Maybe (t, String) -> String
+extractRemainingString (Just (x, y)) = y
+extractRemainingString Nothing = ""
 
 -- `parse` is the main entry point to run a parser. It shall return successfully
 -- only if the parser consumed the whole input, i.e. if the function inside
 -- the Parser a returns a value of type a along with the empty string.
 parse :: Parser a -> String -> Maybe a
-parse parser input = extractElement $ (runParser parser input)  
+parse parser input = extractElement $ (runParser parser input) 
 
 
 
@@ -63,10 +67,7 @@ pureParserFunction a = Just (a, a)
 
 
 pureParser :: a -> Parser a
-pureParser a = P (\x -> if x == "" then Just (a, "") else Nothing)
-
-
-
+pureParser a = P (\x -> Just (a, x))
 
 
 
@@ -74,16 +75,24 @@ pureParser a = P (\x -> if x == "" then Just (a, "") else Nothing)
 -- Remember all the laws for these?
 -- All implementations should follow all the laws
 instance Functor Parser where
-    fmap = undefined
+    fmap f p = P p'
+      where
+        p' input = case runParser p input of
+            Just (result, rest) -> Just (f result, rest)
+            Nothing             -> Nothing
 
 instance Applicative Parser where
-    pure = undefined
-    (<*>) = undefined
-
+    pure = pureParser
+    p1 <*> p2 = P $ \input -> do
+        (f, rest1) <- runParser p1 input
+        (x, rest2) <- runParser p2 rest1
+        return (f x, rest2)
 
 instance Monad Parser where
-    return = undefined
-    (>>=) = undefined
+    return = pure
+    p1 >>= k = P $ \input -> do
+        (x, rest1) <- runParser p1 input
+        runParser (k x) rest1
 
 
 -- Parser that fails if the input is empty, and takes one character off the
@@ -95,8 +104,7 @@ instance Monad Parser where
 
 charParserFunction :: String -> Maybe (Char, String)
 charParserFunction "" = Nothing
-charParserFunction [x] = Just (x, "")
-charParserFunction xs  = Nothing
+charParserFunction (x:xs) = Just (x, xs) 
 
 anyChar :: Parser Char
 anyChar = P (charParserFunction)
@@ -130,8 +138,7 @@ anyCharBut = undefined
 -- parse (anyChar `orElse` pureParser '☃') [c] == Just c
 -- length xs > 1 ⇒ parse (anyChar `orElse` pureParser '☃') xs == Nothing
 orElse :: Parser a -> Parser a -> Parser a
-orElse noParser p = p
-orElse pureParser _ = pureParser
+orElse = undefined
 
 
 
@@ -140,6 +147,7 @@ orElse pureParser _ = pureParser
 -- it fails, and then returns all results as a list.
 -- Implement this again without breaking the abstraction, using the combinators
 -- above.
+
 many :: Parser a -> Parser [a]
 many = undefined
 
