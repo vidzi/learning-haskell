@@ -142,7 +142,11 @@ anyCharBut x = P $ \input -> do
 -- parse (anyChar `orElse` pureParser '☃') [c] == Just c
 -- length xs > 1 ⇒ parse (anyChar `orElse` pureParser '☃') xs == Nothing
 orElse :: Parser a -> Parser a -> Parser a
-orElse = undefined
+orElse x y = P p'
+      where
+        p' input = case runParser x input of
+            Just (result, rest) -> Just (result, rest)
+            Nothing             -> runParser y input
 
 
 
