@@ -127,7 +127,9 @@ char x = P $ \input -> do
 
 
 anyCharBut :: Char -> Parser Char
-anyCharBut = undefined
+anyCharBut x = P $ \input -> do
+    (element, rest) <- runParser anyChar input
+    if element == x then return (x, input) else return (x, rest)
 
 
 -- Parser which tries the left parser. If it succeeds, it uses that, otherwise
