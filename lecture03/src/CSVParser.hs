@@ -115,7 +115,9 @@ anyChar = P (charParserFunction)
 -- i.e. using only the combinators introduced above. You can use do-notation
 -- if you want.
 char :: Char -> Parser ()
-char = undefined
+char x = P $ \input -> do
+    (element, rest) <- runParser anyChar input
+    if element == x then return ((), rest) else return ((), input)
 
 
 -- Parser which consumes any character not matching criteria
